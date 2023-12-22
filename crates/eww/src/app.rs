@@ -156,6 +156,10 @@ impl<B: DisplayBackend> App<B> {
                     gtk::Window::set_interactive_debugging(true);
                 }
                 DaemonCommand::UpdateVars(mappings) => {
+                    for (_, window) in &self.open_windows {
+                        window.gtk_window.resize(1, 1);
+                    }
+
                     for (var_name, new_value) in mappings {
                         self.update_global_variable(var_name, new_value);
                     }
